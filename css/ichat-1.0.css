@@ -4,6 +4,10 @@
   position: fixed;
   margin: 0;
   z-index: 100001;
+  /* 兼容IE6-7定位 */
+  *position: absolute;
+  *top: expression(eval(document.documentElement.scrollTop));
+  *overflow: hidden;
 }
 .ichat-button {
   padding: 5px 0;
@@ -26,25 +30,38 @@
 }
 .ichat-color-black {
   background: linear-gradient(to bottom, #EEEEEE, #E4E4E4) repeat scroll 0 0 rgba(0, 0, 0, 0);
-  border-left: 1px solid #D4D4D4;
-  border-top: 1px solid #D4D4D4;
-  border-bottom: 1px solid #D4D4D4;
+  /*兼容360*/
+  background-color:#EEEEEE;
+  /*兼容ie8*/
+  background-color:#F4F4F4\0;
+  /* 兼容IE6-7 */
+  *background-color:#F4F4F4;
+  border: 1px solid #D4D4D4;
   box-shadow: 0 0 10px #CCCCCC;
   text-shadow: 0 0 5px #CCCCCC;
   color: #666666;
 }
 .ichat-color-blue {
-  background: linear-gradient(to bottom, #3399FF, #3399FF) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background: linear-gradient(to bottom, #3399FF, #3499FF) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background-color:#3399FF;
+  background-color:#3399FF\0;
+  *background-color:#3399FF;
   color:#FFFFFF;
   box-shadow: 0 0 10px #3399FF;
 }
 .ichat-color-green {
   background: linear-gradient(to bottom, #68D882, #4BB776) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background-color:#68D882;
+  background-color:#4BB776\0;
+  *background-color:#4BB776;
   color:#FFFFFF;
   box-shadow: 0 0 10px #68D882;
 }
 .ichat-color-red {
   background: linear-gradient(to bottom, #F33E6F, #F33E6F) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background-color:#F33E6F;
+  background-color:#F33E6F\0;
+  *background-color:#F33E6F;
   color:#FFFFFF;
   box-shadow: 0 0 10px #F33E6F;
 }

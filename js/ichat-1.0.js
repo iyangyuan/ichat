@@ -20,6 +20,28 @@
       "</div>";
       //分支业务逻辑
       var logic = {
+        util: {
+          //返回ie浏览器版本号，只支持6~9，其他浏览器均为false。
+          ie: function(){
+                  var v = 3, div = document.createElement('div'), all = div.getElementsByTagName('i');
+                  while (
+                      div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+                      all[0]
+                  );
+                  return v > 4 ? v : false ;
+          },
+          compatible: function(){
+            //判断浏览器是否为ie6、ie7
+            var ieVersion = logic.util.ie();
+            if(ieVersion && (ieVersion==6||ieVersion==7)){
+              //注册滚动事件
+              $(window).scroll(function(){
+                var nowtop = parseInt($(document).scrollTop());
+                $('#ichatBody').css('top', nowtop + 200 + 'px');
+              })
+            }
+          }
+        },
         //浮窗逻辑
         body: {
           //浮窗位置
@@ -27,12 +49,12 @@
             left: function(){
               $("#ichatBody").addClass("ichat-pull-left");
               $("#ichatButton").addClass("ichat-float-right");
-              $("#ichatContent").addClass("ichat-float-left");
+              $("#ichatContent").addClass("ichat-float-right");
             },
             right: function(){
               $("#ichatBody").addClass("ichat-pull-right");
               $("#ichatButton").addClass("ichat-float-left");
-              $("#ichatContent").addClass("ichat-float-right");
+              $("#ichatContent").addClass("ichat-float-left");
             }
           },
           //浮窗配色
@@ -165,28 +187,30 @@
       //2.构造列表
       for(var i=0;i<params.items.length;i++){
         var _s = params.items[i];
-        //1.构造基础结构
+        //2-1.构造基础结构
         var _id = "ichatItem"+i;
         var html = itemBody.replace(/@id/g,_id);
         html = html.replace("@title",_s.title);
         //填入页面
         $("#ichatContent").append(html);
-        //2.判断默认显示状态
+        //2-2.判断默认显示状态
         if(!_s.open){
           $("#"+_id).addClass("ichat-display");
         }
-        //3.生成列表
+        //2-3.生成列表
         _s.id = _id;
         //防止崩溃
         if(logic.items[_s.type]){
           logic.items[_s.type](_s);
         }
-        //4.注册事件
+        //2-4.注册事件
         if(logic.items.trigger[_s.trigger]){
           logic.items.trigger[_s.trigger](_id);
         }
       }
-      //3.显示浮窗
+      //3.浏览器兼容
+      logic.util.compatible();
+      //4.显示浮窗
       $("#ichatBody").removeClass("ichat-display");
     }
   });
